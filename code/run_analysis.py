@@ -1,5 +1,3 @@
-"""Fit GW-RF and report training and test performance."""
-
 from pathlib import Path
 
 import numpy as np
@@ -77,7 +75,6 @@ def main():
         [np.arange(len(training)), nearest_training_center]
     )
 
-    print(f"Fitting {len(training)} local GW-RF models...")
     results = Parallel(n_jobs=-1, prefer="threads")(
         delayed(fit_and_predict)(
             center_index,

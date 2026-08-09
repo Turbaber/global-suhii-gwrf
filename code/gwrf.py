@@ -1,17 +1,11 @@
-"""Core functions for geographically weighted random forest."""
-
-from __future__ import annotations
-
 import numpy as np
 from sklearn.ensemble import RandomForestRegressor
-
 
 def adaptive_bisquare_weights(
     coordinates: np.ndarray,
     center: np.ndarray,
     number_of_neighbors: int,
 ) -> np.ndarray:
-    """Return adaptive bi-square weights for one local model."""
     distances = np.linalg.norm(coordinates - center, axis=1)
     neighbor_count = min(max(int(number_of_neighbors), 1), len(distances))
     bandwidth = np.partition(distances, neighbor_count - 1)[neighbor_count - 1]
@@ -32,7 +26,6 @@ def fit_local_random_forest(
     sample_weights: np.ndarray,
     parameters: dict,
 ) -> RandomForestRegressor:
-    """Fit one weighted local random-forest model."""
     model = RandomForestRegressor(
         **parameters,
         n_jobs=1,
@@ -40,4 +33,3 @@ def fit_local_random_forest(
     )
     model.fit(features, target, sample_weight=sample_weights)
     return model
-

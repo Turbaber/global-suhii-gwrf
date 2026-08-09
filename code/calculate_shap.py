@@ -1,5 +1,3 @@
-"""Calculate and save local and global SHAP values for GW-RF."""
-
 from pathlib import Path
 
 import numpy as np
@@ -64,7 +62,6 @@ def main():
         [np.arange(len(training)), nearest_training_center]
     )
 
-    print(f"Calculating SHAP values from {len(training)} local GW-RF models...")
     results = Parallel(n_jobs=-1, prefer="threads")(
         delayed(fit_and_explain)(
             center_index,
@@ -94,9 +91,7 @@ def main():
         }
     ).sort_values("mean_absolute_SHAP", ascending=False)
     global_importance.to_csv(OUTPUT_DIR / "global_shap_importance.csv", index=False)
-    print(f"SHAP results saved to: {OUTPUT_DIR}")
 
 
 if __name__ == "__main__":
     main()
-
