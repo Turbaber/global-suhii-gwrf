@@ -56,7 +56,7 @@ def main():
     all_features = combined[features].to_numpy(dtype=float)
 
     nearest_training_center = np.argmin(
-        cdist(test_coordinates, training_coordinates), axis=1
+        cdist(test_coordinates, training_coordinates, metric="euclidean"), axis=1
     )
     assigned_centers = np.concatenate(
         [np.arange(len(training)), nearest_training_center]
